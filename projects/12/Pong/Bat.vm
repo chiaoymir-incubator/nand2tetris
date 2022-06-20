@@ -1,0 +1,259 @@
+function Bat.new 0
+  push constant 5
+  call Memory.alloc 1
+  pop pointer 0
+  push argument 0
+  pop this 0
+  // let x = Ax ;
+  push argument 1
+  pop this 1
+  // let y = Ay ;
+  push argument 2
+  pop this 2
+  // let width = Awidth ;
+  push argument 3
+  pop this 3
+  // let height = Aheight ;
+  push constant 2
+  pop this 4
+  // let direction = 2 ;
+  push pointer 0
+  call Bat.show 1
+  pop temp 0
+  // do show ( ) ;
+  push pointer 0
+  return
+  // return this ;
+
+function Bat.dispose 0
+  push argument 0
+  pop pointer 0
+  push pointer 0
+  call Memory.deAlloc 1
+  pop temp 0
+  // do Memory . deAlloc ( this ) ;
+  push constant 0
+  return
+  // return ;
+
+function Bat.show 0
+  push argument 0
+  pop pointer 0
+  push constant 1
+  neg
+  call Screen.setColor 1
+  pop temp 0
+  // do Screen . setColor ( true ) ;
+  push pointer 0
+  call Bat.draw 1
+  pop temp 0
+  // do draw ( ) ;
+  push constant 0
+  return
+  // return ;
+
+function Bat.hide 0
+  push argument 0
+  pop pointer 0
+  push constant 0
+  call Screen.setColor 1
+  pop temp 0
+  // do Screen . setColor ( false ) ;
+  push pointer 0
+  call Bat.draw 1
+  pop temp 0
+  // do draw ( ) ;
+  push constant 0
+  return
+  // return ;
+
+function Bat.draw 0
+  push argument 0
+  pop pointer 0
+  push this 0
+  push this 1
+  push this 0
+  push this 2
+  add
+  push this 1
+  push this 3
+  add
+  call Screen.drawRectangle 4
+  pop temp 0
+  // do Screen . drawRectangle ( x , y , x + width , y + height ) ;
+  push constant 0
+  return
+  // return ;
+
+function Bat.setDirection 0
+  push argument 0
+  pop pointer 0
+  push argument 1
+  pop this 4
+  // let direction = Adirection ;
+  push constant 0
+  return
+  // return ;
+
+function Bat.getLeft 0
+  push argument 0
+  pop pointer 0
+  push this 0
+  return
+  // return x ;
+
+function Bat.getRight 0
+  push argument 0
+  pop pointer 0
+  push this 0
+  push this 2
+  add
+  return
+  // return x + width ;
+
+function Bat.setWidth 0
+  push argument 0
+  pop pointer 0
+  push pointer 0
+  call Bat.hide 1
+  pop temp 0
+  // do hide ( ) ;
+  push argument 1
+  pop this 2
+  // let width = Awidth ;
+  push pointer 0
+  call Bat.show 1
+  pop temp 0
+  // do show ( ) ;
+  push constant 0
+  return
+  // return ;
+
+function Bat.move 0
+  push argument 0
+  pop pointer 0
+  push this 4
+  push constant 1
+  eq
+  not
+  if-goto Bat.move.0
+  push this 0
+  push constant 4
+  sub
+  pop this 0
+  // let x = x - 4 ;
+  push this 0
+  push constant 0
+  lt
+  not
+  if-goto Bat.move.2
+  push constant 0
+  pop this 0
+  // let x = 0 ;
+  goto Bat.move.3
+label Bat.move.2
+label Bat.move.3
+  // }
+  push constant 0
+  call Screen.setColor 1
+  pop temp 0
+  // do Screen . setColor ( false ) ;
+  push this 0
+  push this 2
+  add
+  push constant 1
+  add
+  push this 1
+  push this 0
+  push this 2
+  add
+  push constant 4
+  add
+  push this 1
+  push this 3
+  add
+  call Screen.drawRectangle 4
+  pop temp 0
+  // do Screen . drawRectangle ( ( x + width ) + 1 , y , ( x + width ) + 4 , y + height ) ;
+  push constant 1
+  neg
+  call Screen.setColor 1
+  pop temp 0
+  // do Screen . setColor ( true ) ;
+  push this 0
+  push this 1
+  push this 0
+  push constant 3
+  add
+  push this 1
+  push this 3
+  add
+  call Screen.drawRectangle 4
+  pop temp 0
+  // do Screen . drawRectangle ( x , y , x + 3 , y + height ) ;
+  goto Bat.move.1
+label Bat.move.0
+  push this 0
+  push constant 4
+  add
+  pop this 0
+  // let x = x + 4 ;
+  push this 0
+  push this 2
+  add
+  push constant 511
+  gt
+  not
+  if-goto Bat.move.4
+  push constant 511
+  push this 2
+  sub
+  pop this 0
+  // let x = 511 - width ;
+  goto Bat.move.5
+label Bat.move.4
+label Bat.move.5
+  // }
+  push constant 0
+  call Screen.setColor 1
+  pop temp 0
+  // do Screen . setColor ( false ) ;
+  push this 0
+  push constant 4
+  sub
+  push this 1
+  push this 0
+  push constant 1
+  sub
+  push this 1
+  push this 3
+  add
+  call Screen.drawRectangle 4
+  pop temp 0
+  // do Screen . drawRectangle ( x - 4 , y , x - 1 , y + height ) ;
+  push constant 1
+  neg
+  call Screen.setColor 1
+  pop temp 0
+  // do Screen . setColor ( true ) ;
+  push this 0
+  push this 2
+  add
+  push constant 3
+  sub
+  push this 1
+  push this 0
+  push this 2
+  add
+  push this 1
+  push this 3
+  add
+  call Screen.drawRectangle 4
+  pop temp 0
+  // do Screen . drawRectangle ( ( x + width ) - 3 , y , x + width , y + height ) ;
+label Bat.move.1
+  // }
+  push constant 0
+  return
+  // return ;
+

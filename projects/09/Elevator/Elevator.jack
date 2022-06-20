@@ -1,0 +1,173 @@
+/** this class assumes all input are valid */
+class Elevator {
+    field int floors, current_floor, passengers, capacity, direction;
+    field Array arr;
+
+    
+    constructor Elevator new(int Afloors, int Acurrent_floor, int Acapacity) {
+        let floors = Afloors;
+        let current_floor = Acurrent_floor;
+        let capacity = Acapacity;
+        let passengers = 0;
+        let arr = Array.new(floors);
+        let direction = 0;
+        return this;
+    }
+
+    /** accessor methods */
+    method int getFloors() {
+        return floors;
+    }
+
+    method int getCurrentFloor() {
+        return current_floor;
+    }
+
+    method int getPassengers() {
+        return passengers;
+    }
+
+    method int getCapacity() {
+        return capacity;
+    }
+
+    /** helper methods */
+    method boolean isValidPassengers(int num) {
+        var boolean result;
+        let result = true;
+
+        if (num < 0) {
+            if ((passengers + num) < 0) {
+                let result = false;
+            }
+        } else {
+            if ((passengers + num) > capacity) {
+                let result = false;
+            }
+        }
+
+        return result;
+    }
+
+    method boolean hasUsers() {
+        var int i;
+        var boolean result;
+        let i = 0;
+        let result = false;
+
+        while (i < floors) {
+            if (~(arr[i] = 0)) {
+                let result = true;
+                let i = floors;
+            }
+            let i = i + 1;
+        }
+        return result;
+    }
+
+    method int getUsers(int floor, int direction) {
+        var int i;
+        var int sum;
+        let i = floor;
+        let sum = 0;
+
+        if (direction = 1) {
+            // up
+            while (i < floors) {
+                let sum = sum + arr[i];
+                let i = i + 1;
+            }
+
+        } else {
+            // down
+            while (i > -1) {
+                let sum = sum + arr[i];
+                let i = i - 1;
+            }
+        }
+
+        return sum;
+    }
+
+    /** main methods */
+    method void run() {
+        var int upUsers, downUsers;
+        // static
+        if (direction = 0) {
+            if (hasUsers()) {
+                let upUsers = getUsers(current_floor, 1);
+                let downUsers = getUsers(current_floor, -1);
+                if (upUsers > downUsers) {
+                    let direction = 1;
+                } else {
+                    let direction = -1;
+                }
+            }
+        }
+        // upward
+        if (direction = 1) {
+
+        }
+        // downward
+        if (direction = -1) {
+
+        }
+        return ;
+    }
+
+    method void addUsers(int floor, int num) {
+        let arr[floor - 1] = arr[floor - 1] + num;
+        return ;
+    }
+
+    method void subUsers(int floor, int num) {
+        let arr[floor - 1] = arr[floor - 1] - num;
+        return ;
+    }
+
+    method void upFloor(int num) {
+        if ((current_floor + num) > floors) {
+            let current_floor = floors;
+        } else {
+            let current_floor = current_floor + num;
+        }
+        return ;
+    }
+
+    method void downFloor(int num) {
+        if ((current_floor - num) < 1) {
+            let current_floor = 0;
+        } else {
+            let current_floor = current_floor - num;
+        }
+        return ;
+    }
+
+    method void gotoFloor(int next_floor) {
+        let current_floor = next_floor;
+        return ;
+    }
+
+    method void addPassengers(int num) {
+        if (isValidPassengers(num)) {
+            let passengers = passengers + num;
+        } else {
+            let passengers = capacity;
+        }
+        return ;
+    }
+
+    method void subPassengers(int num) {
+        if (isValidPassengers(-num)) {
+            let passengers = passengers - num;
+        } else {
+            let passengers = 0;
+        }
+        return ;
+    }
+
+    method void dispose() {
+        do Memory.deAlloc(this);
+        return ;
+    }
+}

@@ -1,0 +1,539 @@
+function Ball.new 0
+  push constant 15
+  call Memory.alloc 1
+  pop pointer 0
+  push argument 0
+  pop this 0
+  // let x = Ax ;
+  push argument 1
+  pop this 1
+  // let y = Ay ;
+  push argument 2
+  pop this 10
+  // let leftWall = AleftWall ;
+  push argument 3
+  push constant 6
+  sub
+  pop this 11
+  // let rightWall = ArightWall - 6 ;
+  push argument 4
+  pop this 12
+  // let topWall = AtopWall ;
+  push argument 5
+  push constant 6
+  sub
+  pop this 13
+  // let bottomWall = AbottomWall - 6 ;
+  push constant 0
+  pop this 14
+  // let wall = 0 ;
+  push pointer 0
+  call Ball.show 1
+  pop temp 0
+  // do show ( ) ;
+  push pointer 0
+  return
+  // return this ;
+
+function Ball.dispose 0
+  push argument 0
+  pop pointer 0
+  push pointer 0
+  call Memory.deAlloc 1
+  pop temp 0
+  // do Memory . deAlloc ( this ) ;
+  push constant 0
+  return
+  // return ;
+
+function Ball.show 0
+  push argument 0
+  pop pointer 0
+  push constant 1
+  neg
+  call Screen.setColor 1
+  pop temp 0
+  // do Screen . setColor ( true ) ;
+  push pointer 0
+  call Ball.draw 1
+  pop temp 0
+  // do draw ( ) ;
+  push constant 0
+  return
+  // return ;
+
+function Ball.hide 0
+  push argument 0
+  pop pointer 0
+  push constant 0
+  call Screen.setColor 1
+  pop temp 0
+  // do Screen . setColor ( false ) ;
+  push pointer 0
+  call Ball.draw 1
+  pop temp 0
+  // do draw ( ) ;
+  push constant 0
+  return
+  // return ;
+
+function Ball.draw 0
+  push argument 0
+  pop pointer 0
+  push this 0
+  push this 1
+  push this 0
+  push constant 5
+  add
+  push this 1
+  push constant 5
+  add
+  call Screen.drawRectangle 4
+  pop temp 0
+  // do Screen . drawRectangle ( x , y , x + 5 , y + 5 ) ;
+  push constant 0
+  return
+  // return ;
+
+function Ball.getLeft 0
+  push argument 0
+  pop pointer 0
+  push this 0
+  return
+  // return x ;
+
+function Ball.getRight 0
+  push argument 0
+  pop pointer 0
+  push this 0
+  push constant 5
+  add
+  return
+  // return x + 5 ;
+
+function Ball.setDestination 3
+  push argument 0
+  pop pointer 0
+  push argument 1
+  push this 0
+  sub
+  pop this 2
+  // let lengthx = destx - x ;
+  push argument 2
+  push this 1
+  sub
+  pop this 3
+  // let lengthy = desty - y ;
+  push this 2
+  call Math.abs 1
+  pop local 0
+  // let dx = Math . abs ( lengthx ) ;
+  push this 3
+  call Math.abs 1
+  pop local 1
+  // let dy = Math . abs ( lengthy ) ;
+  push local 0
+  push local 1
+  lt
+  pop this 7
+  // let invert = ( dx < dy ) ;
+  push this 7
+  not
+  if-goto Ball.setDestination.0
+  push local 0
+  pop local 2
+  // let temp = dx ;
+  push local 1
+  pop local 0
+  // let dx = dy ;
+  push local 2
+  pop local 1
+  // let dy = temp ;
+  push this 1
+  push argument 2
+  lt
+  pop this 8
+  // let positivex = ( y < desty ) ;
+  push this 0
+  push argument 1
+  lt
+  pop this 9
+  // let positivey = ( x < destx ) ;
+  goto Ball.setDestination.1
+label Ball.setDestination.0
+  push this 0
+  push argument 1
+  lt
+  pop this 8
+  // let positivex = ( x < destx ) ;
+  push this 1
+  push argument 2
+  lt
+  pop this 9
+  // let positivey = ( y < desty ) ;
+label Ball.setDestination.1
+  // }
+  push constant 2
+  push local 1
+  call Math.multiply 2
+  push local 0
+  sub
+  pop this 4
+  // let d = ( 2 * dy ) - dx ;
+  push constant 2
+  push local 1
+  call Math.multiply 2
+  pop this 5
+  // let straightD = 2 * dy ;
+  push constant 2
+  push local 1
+  push local 0
+  sub
+  call Math.multiply 2
+  pop this 6
+  // let diagonalD = 2 * ( dy - dx ) ;
+  push constant 0
+  return
+  // return ;
+
+function Ball.move 0
+  push argument 0
+  pop pointer 0
+  push pointer 0
+  call Ball.hide 1
+  pop temp 0
+  // do hide ( ) ;
+  push this 4
+  push constant 0
+  lt
+  not
+  if-goto Ball.move.0
+  push this 4
+  push this 5
+  add
+  pop this 4
+  // let d = d + straightD ;
+  goto Ball.move.1
+label Ball.move.0
+  push this 4
+  push this 6
+  add
+  pop this 4
+  // let d = d + diagonalD ;
+  push this 9
+  not
+  if-goto Ball.move.2
+  push this 7
+  not
+  if-goto Ball.move.4
+  push this 0
+  push constant 4
+  add
+  pop this 0
+  // let x = x + 4 ;
+  goto Ball.move.5
+label Ball.move.4
+  push this 1
+  push constant 4
+  add
+  pop this 1
+  // let y = y + 4 ;
+label Ball.move.5
+  // }
+  goto Ball.move.3
+label Ball.move.2
+  push this 7
+  not
+  if-goto Ball.move.6
+  push this 0
+  push constant 4
+  sub
+  pop this 0
+  // let x = x - 4 ;
+  goto Ball.move.7
+label Ball.move.6
+  push this 1
+  push constant 4
+  sub
+  pop this 1
+  // let y = y - 4 ;
+label Ball.move.7
+  // }
+label Ball.move.3
+  // }
+label Ball.move.1
+  // }
+  push this 8
+  not
+  if-goto Ball.move.8
+  push this 7
+  not
+  if-goto Ball.move.10
+  push this 1
+  push constant 4
+  add
+  pop this 1
+  // let y = y + 4 ;
+  goto Ball.move.11
+label Ball.move.10
+  push this 0
+  push constant 4
+  add
+  pop this 0
+  // let x = x + 4 ;
+label Ball.move.11
+  // }
+  goto Ball.move.9
+label Ball.move.8
+  push this 7
+  not
+  if-goto Ball.move.12
+  push this 1
+  push constant 4
+  sub
+  pop this 1
+  // let y = y - 4 ;
+  goto Ball.move.13
+label Ball.move.12
+  push this 0
+  push constant 4
+  sub
+  pop this 0
+  // let x = x - 4 ;
+label Ball.move.13
+  // }
+label Ball.move.9
+  // }
+  push this 0
+  push this 10
+  gt
+  not
+  not
+  if-goto Ball.move.14
+  push constant 1
+  pop this 14
+  // let wall = 1 ;
+  push this 10
+  pop this 0
+  // let x = leftWall ;
+  goto Ball.move.15
+label Ball.move.14
+label Ball.move.15
+  // }
+  push this 0
+  push this 11
+  lt
+  not
+  not
+  if-goto Ball.move.16
+  push constant 2
+  pop this 14
+  // let wall = 2 ;
+  push this 11
+  pop this 0
+  // let x = rightWall ;
+  goto Ball.move.17
+label Ball.move.16
+label Ball.move.17
+  // }
+  push this 1
+  push this 12
+  gt
+  not
+  not
+  if-goto Ball.move.18
+  push constant 3
+  pop this 14
+  // let wall = 3 ;
+  push this 12
+  pop this 1
+  // let y = topWall ;
+  goto Ball.move.19
+label Ball.move.18
+label Ball.move.19
+  // }
+  push this 1
+  push this 13
+  lt
+  not
+  not
+  if-goto Ball.move.20
+  push constant 4
+  pop this 14
+  // let wall = 4 ;
+  push this 13
+  pop this 1
+  // let y = bottomWall ;
+  goto Ball.move.21
+label Ball.move.20
+label Ball.move.21
+  // }
+  push pointer 0
+  call Ball.show 1
+  pop temp 0
+  // do show ( ) ;
+  push this 14
+  return
+  // return wall ;
+
+function Ball.bounce 5
+  push argument 0
+  pop pointer 0
+  push this 2
+  push constant 10
+  call Math.divide 2
+  pop local 2
+  // let divLengthx = lengthx / 10 ;
+  push this 3
+  push constant 10
+  call Math.divide 2
+  pop local 3
+  // let divLengthy = lengthy / 10 ;
+  push argument 1
+  push constant 0
+  eq
+  not
+  if-goto Ball.bounce.0
+  push constant 10
+  pop local 4
+  // let factor = 10 ;
+  goto Ball.bounce.1
+label Ball.bounce.0
+  push this 2
+  push constant 0
+  lt
+  not
+  push argument 1
+  push constant 1
+  eq
+  and
+  push this 2
+  push constant 0
+  lt
+  push argument 1
+  push constant 1
+  neg
+  eq
+  and
+  or
+  not
+  if-goto Ball.bounce.2
+  push constant 20
+  pop local 4
+  // let factor = 20 ;
+  goto Ball.bounce.3
+label Ball.bounce.2
+  push constant 5
+  pop local 4
+  // let factor = 5 ;
+label Ball.bounce.3
+  // }
+label Ball.bounce.1
+  // }
+  push this 14
+  push constant 1
+  eq
+  not
+  if-goto Ball.bounce.4
+  push constant 506
+  pop local 0
+  // let newx = 506 ;
+  push local 3
+  push constant 50
+  neg
+  call Math.multiply 2
+  push local 2
+  call Math.divide 2
+  pop local 1
+  // let newy = ( divLengthy * ( - 50 ) ) / divLengthx ;
+  push this 1
+  push local 1
+  push local 4
+  call Math.multiply 2
+  add
+  pop local 1
+  // let newy = y + ( newy * factor ) ;
+  goto Ball.bounce.5
+label Ball.bounce.4
+  push this 14
+  push constant 2
+  eq
+  not
+  if-goto Ball.bounce.6
+  push constant 0
+  pop local 0
+  // let newx = 0 ;
+  push local 3
+  push constant 50
+  call Math.multiply 2
+  push local 2
+  call Math.divide 2
+  pop local 1
+  // let newy = ( divLengthy * 50 ) / divLengthx ;
+  push this 1
+  push local 1
+  push local 4
+  call Math.multiply 2
+  add
+  pop local 1
+  // let newy = y + ( newy * factor ) ;
+  goto Ball.bounce.7
+label Ball.bounce.6
+  push this 14
+  push constant 3
+  eq
+  not
+  if-goto Ball.bounce.8
+  push constant 250
+  pop local 1
+  // let newy = 250 ;
+  push local 2
+  push constant 25
+  neg
+  call Math.multiply 2
+  push local 3
+  call Math.divide 2
+  pop local 0
+  // let newx = ( divLengthx * ( - 25 ) ) / divLengthy ;
+  push this 0
+  push local 0
+  push local 4
+  call Math.multiply 2
+  add
+  pop local 0
+  // let newx = x + ( newx * factor ) ;
+  goto Ball.bounce.9
+label Ball.bounce.8
+  push constant 0
+  pop local 1
+  // let newy = 0 ;
+  push local 2
+  push constant 25
+  call Math.multiply 2
+  push local 3
+  call Math.divide 2
+  pop local 0
+  // let newx = ( divLengthx * 25 ) / divLengthy ;
+  push this 0
+  push local 0
+  push local 4
+  call Math.multiply 2
+  add
+  pop local 0
+  // let newx = x + ( newx * factor ) ;
+label Ball.bounce.9
+  // }
+label Ball.bounce.7
+  // }
+label Ball.bounce.5
+  // }
+  push pointer 0
+  push local 0
+  push local 1
+  call Ball.setDestination 3
+  pop temp 0
+  // do setDestination ( newx , newy ) ;
+  push constant 0
+  return
+  // return ;
+

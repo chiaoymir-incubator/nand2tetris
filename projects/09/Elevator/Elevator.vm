@@ -1,0 +1,379 @@
+function Elevator.new 0
+push constant 6
+call Memory.alloc 1
+pop pointer 0
+push argument 0
+pop this 0
+push argument 1
+pop this 1
+push argument 2
+pop this 3
+push constant 0
+pop this 2
+push this 0
+call Array.new 1
+pop this 5
+push constant 0
+pop this 4
+push pointer 0
+return
+function Elevator.getFloors 0
+push argument 0
+pop pointer 0
+push this 0
+return
+function Elevator.getCurrentFloor 0
+push argument 0
+pop pointer 0
+push this 1
+return
+function Elevator.getPassengers 0
+push argument 0
+pop pointer 0
+push this 2
+return
+function Elevator.getCapacity 0
+push argument 0
+pop pointer 0
+push this 3
+return
+function Elevator.isValidPassengers 1
+push argument 0
+pop pointer 0
+push constant 0
+not
+pop local 0
+push argument 1
+push constant 0
+lt
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push this 2
+push argument 1
+add
+push constant 0
+lt
+if-goto IF_TRUE1
+goto IF_FALSE1
+label IF_TRUE1
+push constant 0
+pop local 0
+label IF_FALSE1
+goto IF_END0
+label IF_FALSE0
+push this 2
+push argument 1
+add
+push this 3
+gt
+if-goto IF_TRUE2
+goto IF_FALSE2
+label IF_TRUE2
+push constant 0
+pop local 0
+label IF_FALSE2
+label IF_END0
+push local 0
+return
+function Elevator.hasUsers 2
+push argument 0
+pop pointer 0
+push constant 0
+pop local 0
+push constant 0
+pop local 1
+label WHILE_EXP0
+push local 0
+push this 0
+lt
+not
+if-goto WHILE_END0
+push local 0
+push this 5
+add
+pop pointer 1
+push that 0
+push constant 0
+eq
+not
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push constant 0
+not
+pop local 1
+push this 0
+pop local 0
+label IF_FALSE0
+push local 0
+push constant 1
+add
+pop local 0
+goto WHILE_EXP0
+label WHILE_END0
+push local 1
+return
+function Elevator.getUsers 2
+push argument 0
+pop pointer 0
+push argument 1
+pop local 0
+push constant 0
+pop local 1
+push argument 2
+push constant 1
+eq
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+label WHILE_EXP0
+push local 0
+push this 0
+lt
+not
+if-goto WHILE_END0
+push local 1
+push local 0
+push this 5
+add
+pop pointer 1
+push that 0
+add
+pop local 1
+push local 0
+push constant 1
+add
+pop local 0
+goto WHILE_EXP0
+label WHILE_END0
+goto IF_END0
+label IF_FALSE0
+label WHILE_EXP1
+push local 0
+push constant 1
+neg
+gt
+not
+if-goto WHILE_END1
+push local 1
+push local 0
+push this 5
+add
+pop pointer 1
+push that 0
+add
+pop local 1
+push local 0
+push constant 1
+sub
+pop local 0
+goto WHILE_EXP1
+label WHILE_END1
+label IF_END0
+push local 1
+return
+function Elevator.run 2
+push argument 0
+pop pointer 0
+push this 4
+push constant 0
+eq
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push pointer 0
+call Elevator.hasUsers 1
+if-goto IF_TRUE1
+goto IF_FALSE1
+label IF_TRUE1
+push pointer 0
+push this 1
+push constant 1
+call Elevator.getUsers 3
+pop local 0
+push pointer 0
+push this 1
+push constant 1
+neg
+call Elevator.getUsers 3
+pop local 1
+push local 0
+push local 1
+gt
+if-goto IF_TRUE2
+goto IF_FALSE2
+label IF_TRUE2
+push constant 1
+pop this 4
+goto IF_END2
+label IF_FALSE2
+push constant 1
+neg
+pop this 4
+label IF_END2
+label IF_FALSE1
+label IF_FALSE0
+push this 4
+push constant 1
+eq
+if-goto IF_TRUE3
+goto IF_FALSE3
+label IF_TRUE3
+label IF_FALSE3
+push this 4
+push constant 1
+neg
+eq
+if-goto IF_TRUE4
+goto IF_FALSE4
+label IF_TRUE4
+label IF_FALSE4
+push constant 0
+return
+function Elevator.addUsers 0
+push argument 0
+pop pointer 0
+push argument 1
+push constant 1
+sub
+push this 5
+add
+push argument 1
+push constant 1
+sub
+push this 5
+add
+pop pointer 1
+push that 0
+push argument 2
+add
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 0
+return
+function Elevator.subUsers 0
+push argument 0
+pop pointer 0
+push argument 1
+push constant 1
+sub
+push this 5
+add
+push argument 1
+push constant 1
+sub
+push this 5
+add
+pop pointer 1
+push that 0
+push argument 2
+sub
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 0
+return
+function Elevator.upFloor 0
+push argument 0
+pop pointer 0
+push this 1
+push argument 1
+add
+push this 0
+gt
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push this 0
+pop this 1
+goto IF_END0
+label IF_FALSE0
+push this 1
+push argument 1
+add
+pop this 1
+label IF_END0
+push constant 0
+return
+function Elevator.downFloor 0
+push argument 0
+pop pointer 0
+push this 1
+push argument 1
+sub
+push constant 1
+lt
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push constant 0
+pop this 1
+goto IF_END0
+label IF_FALSE0
+push this 1
+push argument 1
+sub
+pop this 1
+label IF_END0
+push constant 0
+return
+function Elevator.gotoFloor 0
+push argument 0
+pop pointer 0
+push argument 1
+pop this 1
+push constant 0
+return
+function Elevator.addPassengers 0
+push argument 0
+pop pointer 0
+push pointer 0
+push argument 1
+call Elevator.isValidPassengers 2
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push this 2
+push argument 1
+add
+pop this 2
+goto IF_END0
+label IF_FALSE0
+push this 3
+pop this 2
+label IF_END0
+push constant 0
+return
+function Elevator.subPassengers 0
+push argument 0
+pop pointer 0
+push pointer 0
+push argument 1
+neg
+call Elevator.isValidPassengers 2
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push this 2
+push argument 1
+sub
+pop this 2
+goto IF_END0
+label IF_FALSE0
+push constant 0
+pop this 2
+label IF_END0
+push constant 0
+return
+function Elevator.dispose 0
+push argument 0
+pop pointer 0
+push pointer 0
+call Memory.deAlloc 1
+pop temp 0
+push constant 0
+return

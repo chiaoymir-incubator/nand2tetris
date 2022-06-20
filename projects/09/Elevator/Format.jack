@@ -1,0 +1,168 @@
+class Format {
+    static int row, column, max_rows;
+    static String emptyLine;
+    static Array lines;
+
+    function void newFormat() {
+        let emptyLine = "                                                                ";
+        let max_rows = 22;
+        let lines = Array.new(max_rows);
+        do Format.clearScreen();
+
+        return ;
+    }
+
+    function void clearScreen() {
+        var int i;
+
+        let row = 0;
+        // fill the array with empty lines
+        let i = 0;
+        while (i < max_rows) {
+            let lines[i] = emptyLine;
+            let i = i + 1;
+        }
+    
+        return ;
+    }
+
+    function void printScreen() {
+        var int i, next_row;
+        let i = 0;
+
+        while (i < max_rows) {
+            do Format.eraseLn(i);
+            do Output.printString(lines[i]);
+            do Output.println();
+            let i = i + 1;
+        }
+
+        if (row > max_rows) {
+            let next_row = max_rows;
+        } else {
+            let next_row = row;
+        }
+
+        do Output.moveCursor(next_row, 0);
+
+        return ;
+    }
+
+    function void addLine(String s) {
+        var int i;
+
+        if (row < max_rows) {
+            let lines[row] = s;
+            let row = row + 1;
+        } else {
+            // this will delete the oldest line and append the new line
+            let i = 0;
+            while (i < (max_rows - 1)) {
+                let lines[i] = lines[i+1];
+                let i = i+1;
+            }
+            let lines[max_rows - 1] = s;
+        }
+        return ;
+    }
+
+    function String charToString(char c) {
+        var String s;
+        let s = String.new(64);
+        let s = s.appendChar(c);
+        return s;
+    }
+
+    function String intToString(int i) {
+        var String s;
+        let s = String.new(64);
+        do s.setInt(i);
+        return s;
+    }
+
+    function String concat(String s1, String s2) {
+        var String s;
+        var int i, l1, l2;
+
+        let l1 = s1.length(); 
+        let l2 = s2.length();
+        let s = String.new(l1 + l2);
+
+        let i = 0;
+        while (i < l1) {
+            let s = s.appendChar(s1.charAt(i));
+            let i = i + 1;
+        }
+
+        let i = 0;
+        while (i < l2) {
+            let s = s.appendChar(s2.charAt(i));
+            let i = i + 1;
+        }
+
+        return s;
+    }
+
+    function char readChar(String m) {
+        var String line;
+        var char c;
+        let c = Keyboard.readChar(m);
+        let line = Format.concat(m, Format.charToString(c));
+        do Format.addLine(line);
+        return c;
+    }
+
+    function int readLine(String m) {
+        var String s, line;
+        let s = Keyboard.readLine(m);
+        let line = Format.concat(m, s);
+        do Format.addLine(line);
+        return s;
+    }
+
+    function int readInt(String m) {
+        var String line;
+        var int i;
+        let i = Keyboard.readInt(m);
+        let line = Format.concat(m, Format.intToString(i));
+        do Format.addLine(line);
+        return i;
+    }
+
+    //** this function assume the cursor is adjusted to the right position */
+    function void eraseLn(int i) {
+        do Output.moveCursor(i, 0);
+        do Output.printString(emptyLine);
+        do Output.moveCursor(i, 0);
+        return ;
+    }
+
+    function void printCharLn(char c) {
+        do Format.addLine(Format.charToString(c));
+        do Format.printScreen();
+        return ;
+    }
+
+    function void printStringLn(String s) {
+        do Format.addLine(s);
+        do Format.printScreen();
+        return ;
+    }
+
+    function void printIntLn(int i) {
+        do Format.addLine(Format.intToString(i));
+        do Format.printScreen();
+        return ;
+    }
+
+    function void printBatchString(Array arr, int size) {
+        var int i;
+        let i = 0;
+        while (i < size) {
+            do Format.addLine(arr[i]);
+            let i = i + 1;
+        }
+        do Format.printScreen();
+        return ;
+    }
+}

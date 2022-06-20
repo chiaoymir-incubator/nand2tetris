@@ -1,0 +1,19 @@
+class Main {
+    function void main() {
+        var ElevatorSimulator simulator;
+        var int floors, current_floor, capacity;
+        
+        // initialization
+        do Format.newFormat();
+
+        let floors = Format.readInt("Enter the number of floors: ");
+        let current_floor = Format.readInt("Enter the current floor: ");
+        let capacity = Format.readInt("Enter the capacity of passengers (number of people): ");
+
+        let simulator = ElevatorSimulator.new(floors, current_floor, capacity);
+
+        do simulator.start();
+        do simulator.dispose();
+        return ;
+    }
+}

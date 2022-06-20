@@ -1,0 +1,459 @@
+function Format.newFormat 0
+push constant 64
+call String.new 1
+push constant 32
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+pop static 3
+push constant 22
+pop static 2
+push static 2
+call Array.new 1
+pop static 4
+call Format.clearScreen 0
+pop temp 0
+push constant 0
+return
+function Format.clearScreen 1
+push constant 0
+pop static 0
+push constant 0
+pop local 0
+label WHILE_EXP0
+push local 0
+push static 2
+lt
+not
+if-goto WHILE_END0
+push local 0
+push static 4
+add
+push static 3
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push local 0
+push constant 1
+add
+pop local 0
+goto WHILE_EXP0
+label WHILE_END0
+push constant 0
+return
+function Format.printScreen 2
+push constant 0
+pop local 0
+label WHILE_EXP0
+push local 0
+push static 2
+lt
+not
+if-goto WHILE_END0
+push local 0
+call Format.eraseLn 1
+pop temp 0
+push local 0
+push static 4
+add
+pop pointer 1
+push that 0
+call Output.printString 1
+pop temp 0
+call Output.println 0
+pop temp 0
+push local 0
+push constant 1
+add
+pop local 0
+goto WHILE_EXP0
+label WHILE_END0
+push static 0
+push static 2
+gt
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push static 2
+pop local 1
+goto IF_END0
+label IF_FALSE0
+push static 0
+pop local 1
+label IF_END0
+push local 1
+push constant 0
+call Output.moveCursor 2
+pop temp 0
+push constant 0
+return
+function Format.addLine 1
+push static 0
+push static 2
+lt
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push static 0
+push static 4
+add
+push argument 0
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push static 0
+push constant 1
+add
+pop static 0
+goto IF_END0
+label IF_FALSE0
+push constant 0
+pop local 0
+label WHILE_EXP0
+push local 0
+push static 2
+push constant 1
+sub
+lt
+not
+if-goto WHILE_END0
+push local 0
+push static 4
+add
+push local 0
+push constant 1
+add
+push static 4
+add
+pop pointer 1
+push that 0
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push local 0
+push constant 1
+add
+pop local 0
+goto WHILE_EXP0
+label WHILE_END0
+push static 2
+push constant 1
+sub
+push static 4
+add
+push argument 0
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+label IF_END0
+push constant 0
+return
+function Format.charToString 1
+push constant 64
+call String.new 1
+pop local 0
+push local 0
+push argument 0
+call String.appendChar 2
+pop local 0
+push local 0
+return
+function Format.intToString 1
+push constant 64
+call String.new 1
+pop local 0
+push local 0
+push argument 0
+call String.setInt 2
+pop temp 0
+push local 0
+return
+function Format.concat 4
+push argument 0
+call String.length 1
+pop local 2
+push argument 1
+call String.length 1
+pop local 3
+push local 2
+push local 3
+add
+call String.new 1
+pop local 0
+push constant 0
+pop local 1
+label WHILE_EXP0
+push local 1
+push local 2
+lt
+not
+if-goto WHILE_END0
+push local 0
+push argument 0
+push local 1
+call String.charAt 2
+call String.appendChar 2
+pop local 0
+push local 1
+push constant 1
+add
+pop local 1
+goto WHILE_EXP0
+label WHILE_END0
+push constant 0
+pop local 1
+label WHILE_EXP1
+push local 1
+push local 3
+lt
+not
+if-goto WHILE_END1
+push local 0
+push argument 1
+push local 1
+call String.charAt 2
+call String.appendChar 2
+pop local 0
+push local 1
+push constant 1
+add
+pop local 1
+goto WHILE_EXP1
+label WHILE_END1
+push local 0
+return
+function Format.readChar 2
+push argument 0
+call Keyboard.readChar 1
+pop local 1
+push argument 0
+push local 1
+call Format.charToString 1
+call Format.concat 2
+pop local 0
+push local 0
+call Format.addLine 1
+pop temp 0
+push local 1
+return
+function Format.readLine 2
+push argument 0
+call Keyboard.readLine 1
+pop local 0
+push argument 0
+push local 0
+call Format.concat 2
+pop local 1
+push local 1
+call Format.addLine 1
+pop temp 0
+push local 0
+return
+function Format.readInt 2
+push argument 0
+call Keyboard.readInt 1
+pop local 1
+push argument 0
+push local 1
+call Format.intToString 1
+call Format.concat 2
+pop local 0
+push local 0
+call Format.addLine 1
+pop temp 0
+push local 1
+return
+function Format.eraseLn 0
+push argument 0
+push constant 0
+call Output.moveCursor 2
+pop temp 0
+push static 3
+call Output.printString 1
+pop temp 0
+push argument 0
+push constant 0
+call Output.moveCursor 2
+pop temp 0
+push constant 0
+return
+function Format.printCharLn 0
+push argument 0
+call Format.charToString 1
+call Format.addLine 1
+pop temp 0
+call Format.printScreen 0
+pop temp 0
+push constant 0
+return
+function Format.printStringLn 0
+push argument 0
+call Format.addLine 1
+pop temp 0
+call Format.printScreen 0
+pop temp 0
+push constant 0
+return
+function Format.printIntLn 0
+push argument 0
+call Format.intToString 1
+call Format.addLine 1
+pop temp 0
+call Format.printScreen 0
+pop temp 0
+push constant 0
+return
+function Format.printBatchString 1
+push constant 0
+pop local 0
+label WHILE_EXP0
+push local 0
+push argument 1
+lt
+not
+if-goto WHILE_END0
+push local 0
+push argument 0
+add
+pop pointer 1
+push that 0
+call Format.addLine 1
+pop temp 0
+push local 0
+push constant 1
+add
+pop local 0
+goto WHILE_EXP0
+label WHILE_END0
+call Format.printScreen 0
+pop temp 0
+push constant 0
+return

@@ -1,0 +1,123 @@
+class ElevatorSimulator {
+    field Elevator elevator;
+    field Arr start_menu, cont_menu;
+    field int start_menu_size, cont_menu_size;
+
+    constructor ElevatorSimulator new(int floors, int current_floor, int capacity) {
+        let elevator = Elevator.new(floors, current_floor, capacity);
+
+        let start_menu_size = 5;
+        let start_menu = Array.new(start_menu_size);
+        let start_menu[0] = "Please choose the following options to start:";
+        let start_menu[1] = "  [P]rint: print the current elevator statistics.";
+        let start_menu[2] = "  [A]dd: add a new waiting event.";
+        let start_menu[3] = "  [R]un: run the elevator (one step).";
+        let start_menu[4] = "  [S]kip: skip to the next floor.";
+
+        let cont_menu_size = 3;
+        let cont_menu = Array.new(cont_menu_size);
+        let cont_menu[0] = "Please choose the following options to continue:";
+        let cont_menu[1] = "  [Q]uit: quit the program.";
+        let cont_menu[2] = "  [N]ext: start the next run.";
+
+        return this;
+    }
+
+    /** The simulator has not yet implemented the logic, but only I/O. */
+    method void start() {
+        var char key;  // the key currently pressed by the user
+        var String s;
+        var boolean exit, start_exit, cont_exit;
+        let exit = false;
+        
+
+        while (~exit) {
+            let start_exit = false;
+            let cont_exit = false;
+
+            do Format.clearScreen();
+
+            /* Choose the start menu */
+            while (~start_exit) {
+                let start_exit = true;
+
+                do printMenu(start_menu, start_menu_size, false);
+
+                while (key = 0) {
+                    let key = Keyboard.keyPressed();
+                }
+
+                if (key = 80) { do Format.printStringLn(start_menu[1]); } // P
+                else {
+                    if (key = 65) { do Format.printStringLn(start_menu[2]); } // A
+                    else {
+                        if (key = 82) { do Format.printStringLn(start_menu[3]); } // R
+                        else {
+                            if (key = 83) { do Format.printStringLn(start_menu[4]); } // S
+                            else {
+                                let start_exit = false;
+                                do Format.printStringLn("Invalid operation.");
+                            }
+                        }
+                    }
+                }
+
+                do Format.printStringLn(""); // empty line
+
+                while (~(key = 0)) {
+                    let key = Keyboard.keyPressed();
+                }
+            }
+
+            /* Choose the continue menu */
+            while (~cont_exit) {
+                let cont_exit = true;
+                do printMenu(cont_menu, cont_menu_size, false);
+
+                while (key = 0) {
+                    let key = Keyboard.keyPressed();
+                }
+
+                if (key = 81) { 
+                    let exit = true; 
+                    do Format.printStringLn(cont_menu[1]); // Q
+                } else {
+                    if (key = 78) { do Format.printStringLn(start_menu[2]); } // N
+                    else {
+                        let cont_exit = false;
+                        do Format.printStringLn("Invalid operation. Please choose again!");
+                    }
+                }
+
+                do Format.printStringLn(""); // empty line
+
+                while (~(key = 0)) {
+                    let key = Keyboard.keyPressed();
+                }
+            }
+        }
+        return ;
+    }
+
+    method void print() {
+        return ;
+    }
+
+    method void printMenu(Array menu, int menu_size, boolean clear) {
+        if (clear) {
+            do Format.clearScreen();
+        }
+        do Format.printBatchString(menu, menu_size);
+        do Format.printStringLn("");
+        return ;
+    }
+
+    method void printStatistics() {
+        return ;
+    }
+
+    method void dispose() {
+        do Memory.deAlloc(this);
+        return ;
+    }
+}
